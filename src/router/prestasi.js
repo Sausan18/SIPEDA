@@ -107,7 +107,12 @@ router.get("/delete", async (req, res) => {
 });
 
 router.get("/export", async (req, res) => {
-  const prestasi = await findAllPrestasi();
+  const { tahun } = req.query;
+  let prestasi = await findAllPrestasi();
+  if (tahun && tahun != "null") {
+    prestasi = await findAllPrestasiByTahun(tahun);
+  }
+
   try {
     let workbook = new excelJs.Workbook();
     const sheet = workbook.addWorksheet("Prestasi");

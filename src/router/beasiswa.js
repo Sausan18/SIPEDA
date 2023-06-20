@@ -108,7 +108,11 @@ router.get("/delete", async (req, res) => {
 });
 
 router.get("/export", async (req, res) => {
-  const beasiswa = await findAllBeasiswa();
+  const { tahun } = req.query;
+  let beasiswa = await findAllBeasiswa();
+  if (tahun && tahun != "null") {
+    beasiswa = await findAllBeasiswaByTahun(tahun);
+  }
   try {
     let workbook = new excelJs.Workbook();
     const sheet = workbook.addWorksheet("Beasiswa");
