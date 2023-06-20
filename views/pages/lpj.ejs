@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIPEDA - LPJ</title>
+  <link rel="stylesheet" href="../css/app.css">
+  <script src="../js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<!--form -->
+<input type="checkbox" id="my-modal-4" class="modal-toggle" />
+<label for="my-modal-4" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <h2 class="font-bold text-xl lg:text-2xl my-4">Unggah LPJ</h2>
+    <form action="/kegiatan/lpj" id="form-add-beasiswa" method="POST" enctype="multipart/form-data" show-validation>
+      <div class="form-control">
+        <label for="namakegiatan" class="label">
+          <span class="label-text label-required">Nama Kegiatan</span>
+        </label>
+        <input type="text" name="namakegiatan" id="namakegiatan" class="input input-bordered"
+          placeholder="masukkan nama kegiatan" required>
+      </div>
+      <div class="form-control">
+        <label for="penanggungjawab" class="label">
+          <span class="label-text label-required">Penanggung Jawab</span>
+        </label>
+        <input type="text" name="penanggungjawab" id="penanggungjawab" class="input input-bordered"
+          placeholder="masukkan penanggungjawab surat" required>
+      </div>
+      <br>
+      <div>
+        <select name="departemen" id="departemen" class="select select-bordered w-full max-w-xs" required>
+          <option disabled selected>Departemen</option>
+          <option>Departemen Human Resource (HR)</option>
+          <option>Departemen Penelitian dan Pengembangan Mahasiswa (PPM)</option>
+          <option>Departemen Pengelolaan Kesejahteraan Mahasiswa (PKM)</option>
+          <option>Departemen Minat,Bakat,dan Apresiasi (MBA)</option>
+          <option>Departemen Hubungan Antar lembanga (HUAL)</option>
+          <option>Departemen Komunikasi,Informasi,dan Perencanaan Kreativitas (KOMINKRAF)</option>
+          <option>Departemen Sosial Masyarakat (SOSMAS)</option>
+          <option>Departemen Keagamaan</option>
+          <option>Departemen Administasi (ADM)</option>
+          <option>Departemen Pemberdayaan Perempuan (PP)</option>
+          <option>Departemen Pemasaran dan Kewirausahaan (PKWU)</option>
+        </select>
+      </div>
+      <div class="form-control">
+        <label for="tanggal" class="label">
+          <span class="label-text label-required">Tanggal Pelaksanaan</span>
+        </label>
+        <input type="date" name="tanggal" id="tanggal" class="input input-bordered"
+          placeholder="masukkan tanggal pelaksanaan" required>
+      </div>
+      <br>
+      <div>
+        <textarea name="deskripsi" id="deskripsi" class="textarea textarea-bordered w-full" placeholder="deskripsi kegiatan" required></textarea>
+      </div>
+
+      <br>
+      <div class="form-control w-full max-w-xs">
+        <input type="file" id="files" name="files" class="file-input file-input-bordered w-full max-w-xs" required />
+      </div>
+      <div class="modal-action">
+        <button type="submit" form="form-add-beasiswa" class="btn btn-primary btn-block">Unggah</button>
+      </div>
+      <input type="hidden" name="id-surat-masuk" id="id-surat-masuk" value="0">
+    </form>
+  </label>
+</label>
+<!-- end form -->
+
+<input type="checkbox" id="my-modal-3" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box relative">
+    <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    <h3 class="text-lg font-bold">Nama Kegiatan</h3>
+    <p class="py-4" id="nama-lpj-view">Monev 1</p>
+    <h3 class="text-lg font-bold">Penanggung Jawab</h3>
+    <p class="py-4" id="penanggungjawab-lpj-view">Sausan Nabilah</p>
+    <h3 class="text-lg font-bold">Departemen</h3>
+    <p class="py-4" id="departemen-lpj-view">Departemen Administrasi (ADM)</p>
+    <h3 class="text-lg font-bold">Tanggal Pelaksanaan</h3>
+    <p class="py-4" id="tanggal-lpj-view">01/01/2022</p>
+    <h3 class="text-lg font-bold">Deskripsi Kegiatan</h3>
+    <p class="py-4" id="deskripsi-lpj-view">Monev adalah suatu kegiatan yang dilakukan untuk mengevaluasi kinerja himpunan</p>
+    <a class="btn btn-primary" id="file-lpj-view" target="_blank" href="">Lihat File</a>
+  </div>
+</div>
+
+<body>
+  <div class="lg:mx-4">
+    <div class="drawer drawer-mobile">
+      <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+        <!-- Page content here -->
+
+        <%- include('../partials/navbar'); %>
+        <!-- Content -->
+        <div class="lg:text-2xl text-xl font-bold">Laporan Pertanggungjawaban</div>
+        <% if (user.role===0 || user.role===1) { %>
+          <div class="text-right mr-11"><label for="my-modal-4" onclick="resetData()" class="btn btn-success">Unggah Data</label></div>
+        <% } %>
+        <div class="grid grid-cols-12 gap-3">
+          <div class=" col-span-4">
+            <div class="form-control">
+              <label for="tahun-lpj" class="label">
+                <span class="label-text label-required">Tahun Periode</span>
+              </label>
+              <select type="text" name="tahun-lpj" id="tahun-lpj" class="select select-bordered"
+                style="width: 100%;">
+                <option disabled selected>Pilih Tahun</option>
+                <% for(let i=0; i < tahunOption.length; i++) { %>
+                  <option value="<%= tahunOption[i] %>">
+                    <%= tahunOption[i] %>
+                  </option>
+                <% } %>
+                <option value="0">Reset</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-3">
+          <div class="datatable">
+            <div class="overflow-x-auto">
+              <table id="table" class="table w-full" style="width: 100%;">
+                <thead>
+                  <tr class="text-center">
+                    <th>Nama Kegiatan</th>
+                    <th>Departemen</th>
+                    <th>Tanggal Pelaksanaan</th>
+                    <th>Detail</th>
+                    <% if (user.role===0 || user.role===1) { %>
+                      <th>Aksi</th>
+                    <% } %>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <% for(let i=0; i < surat.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= surat[i].nama %>
+                      </td>
+                      <td>
+                        <%= surat[i].departemen %>
+                      </td>
+                      <td>
+                        <%= new Date(surat[i].tanggal_pelaksana).toLocaleDateString() %>
+                      </td>
+                      <td>
+                        <label for="my-modal-3"
+                          onclick="viewLpjClicked('<%= surat[i].nama %>', '<%= surat[i].penanggungjawab %>', '<%= surat[i].departemen %>', '<%= surat[i].tanggal_pelaksana %>', '<%= surat[i].deskripsi %>', '<%= surat[i].file_path %>')"
+                          class="btn btn-success">Lihat</label>
+                      </td>
+                      <% if (user.role===0 || user.role===1) { %>
+                        <td class="flex justify-center gap-2">
+                          <label for="my-modal-4"
+                            onclick="editLpjClicked('<%= surat[i].nama %>', '<%= surat[i].penanggungjawab %>', '<%= surat[i].departemen %>', '<%= surat[i].tanggal_pelaksana %>', '<%= surat[i].deskripsi %>', '<%= surat[i].file_path %>', '<%= surat[i].id %>')"
+                            class="btn btn-warning">Edit</label>
+                          <button class="btn btn-error" onclick="deleteAction('<%= surat[i].id %>')">Hapus</button>
+                        </td>
+                      <% } %>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- End Of Content -->
+
+        <!-- Footer -->
+        <footer class="footer footer-center p-4 ">
+          <div>
+            <p>Copyright © 2023 - All right reserved by SIPEDA</p>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+
+      </div>
+      <%- include('../partials/sidebar'); %>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <input type="checkbox" id="modal-global" class="modal-toggle" />
+  <label id="modal-global-container" for="modal-global" class="modal modal-bottom sm:modal-middle cursor-pointer">
+    <label class="modal-box p-8 relative">
+
+    </label>
+  </label>
+
+  <script>
+
+    const error = '<%= error %>';
+    const success = '<%= success %>';
+
+    if (error != "") {
+      Swal.fire({
+        title: 'Gagal!',
+        text: error,
+        icon: 'error',
+        timer: 3000,
+        timerProgressBar: true,
+        confirmButtonText: 'Kembali'
+      })
+    }
+
+    if (success != "") {
+      Swal.fire({
+        title: 'Berhasil!',
+        text: success,
+        icon: 'success',
+        timer: 3000,
+        timerProgressBar: true,
+        confirmButtonText: 'Kembali'
+      })
+    }
+
+    function deleteAction(id) {
+      Swal.fire({
+        title: 'Apakah anda yakin',
+        text: "Jika dihapus, data ini tidak bisa dipulihkan",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        cancelButtonText: 'Tidak!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/kegiatan/lpj/delete?id=${id}`
+        }
+      })
+    }
+
+    function resetData() {
+      document.getElementById("namakegiatan").value = "";
+      document.getElementById("penanggungjawab").value = "";
+      document.getElementById("deskripsi").value = "";
+      document.getElementById("id-surat-masuk").value = "0";
+      document.getElementById("departemen").firstElementChild.selected = true;
+      document.getElementById("tanggal").value = "";
+    }
+
+    function editLpjClicked(nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path, id) {
+      document.getElementById("namakegiatan").value = nama;
+      document.getElementById("penanggungjawab").value = penanggungjawab;
+      document.getElementById("deskripsi").value = deskripsi;
+      document.getElementById("id-surat-masuk").value = id;
+
+      const departemenOption = document.getElementById("departemen");
+      for (var i = 0; i < departemenOption.childNodes.length; i++) {
+        var value = departemenOption.childNodes[i].innerHTML;
+        if (value == departemen) {
+          departemenOption.childNodes[i].selected = true
+        }
+      }
+
+      const dateFormated = new Date(tanggal_pelaksana).toLocaleDateString().split("/");
+      document.getElementById("tanggal").valueAsDate = new Date(tanggal_pelaksana);
+
+    }
+
+
+    function viewLpjClicked(nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path) {
+      document.getElementById("nama-lpj-view").innerHTML = nama;
+      document.getElementById("penanggungjawab-lpj-view").innerHTML = penanggungjawab;
+      document.getElementById("departemen-lpj-view").innerHTML = departemen;
+      document.getElementById("tanggal-lpj-view").innerHTML = new Date(tanggal_pelaksana).toLocaleDateString();
+      document.getElementById("deskripsi-lpj-view").innerHTML = deskripsi;
+      document.getElementById('file-lpj-view').href = ".." + file_path.split('public')[1]
+    }
+
+    const tahun = document.getElementById('tahun-lpj');
+    tahun.addEventListener('change', (e) => {
+      if (e.target.value == "0") {
+        window.location.href = `/kegiatan/lpj`
+      } else {
+        window.location.href = `/kegiatan/lpj?tahun=${e.target.value}`
+      }
+      tahun.value = e.target.value
+    })
+  </script>
+</body>
+
+</html>

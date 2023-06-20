@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIPEDA - Surat Masuk</title>
+  <link rel="stylesheet" href="../css/app.css">
+  <script src="../js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<!--form -->
+<input type="checkbox" id="my-modal-4" class="modal-toggle" />
+<label for="my-modal-4" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <h2 class="font-bold text-xl lg:text-2xl my-4">Unggah Surat Masuk</h2>
+    <form action="/kegiatan/suratmasuk" id="form-add-beasiswa" method="POST" enctype="multipart/form-data" show-validation>
+      <div class="form-control">
+        <label for="nomorsurat" class="label">
+          <span class="label-text label-required">Nomor Surat</span>
+        </label>
+        <input type="text" name="nomorsurat" id="nomorsurat" class="input input-bordered"
+          placeholder="masukkan nomor surat" required>
+      </div>
+      <div class="form-control">
+        <label for="instansi" class="label">
+          <span class="label-text label-required">Asal Instansi</span>
+        </label>
+        <input type="text" name="instansi" id="instansi" class="input input-bordered"
+          placeholder="masukkan asal instansi surat" required>
+      </div>
+      <div class="form-control">
+        <label for="perihal" class="label">
+          <span class="label-text label-required">Perihal</span>
+        </label>
+        <input type="text" name="perihal" id="perihal" class="input input-bordered"
+          placeholder="masukkan perihal surat" required>
+      </div>
+      <div class="form-control">
+        <label for="tanggal" class="label">
+          <span class="label-text label-required">Tanggal Surat</span>
+        </label>
+        <input type="date" name="tanggal" id="tanggal" class="input input-bordered"
+          placeholder="masukkan tanggal masuk surat" required>
+      </div>
+      <br>
+      <div class="form-control w-full max-w-xs">
+        <input type="file" id="files" name="files" class="file-input file-input-bordered w-full max-w-xs" required />
+      </div>
+      <div class="modal-action">
+        <button type="submit" form="form-add-beasiswa" class="btn btn-primary btn-block">Unggah</button>
+      </div>
+      <input type="hidden" name="id-surat-masuk" id="id-surat-masuk" value="0">
+    </form>
+  </label>
+</label>
+<!-- end form -->
+
+<input type="checkbox" id="my-modal-3" class="modal-toggle" />
+<div class="modal hidden" id="detail-surat-masuk">
+  <div class="modal-box relative">
+    <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    <h3 class="text-lg font-bold">Nomor Surat</h3>
+    <p class="py-4" id="no-surat-view">005/LBFTXXVIII/HMS-USK/VI/2022</p>
+    <h3 class="text-lg font-bold">Asal Instansi</h3>
+    <p class="py-4" id="instansi-surat-view">Himpunan Mahasiswa Sipil</p>
+    <h3 class="text-lg font-bold">Perihal</h3>
+    <p class="py-4" id="perihal-surat-view">Undangan</p>
+    <h3 class="text-lg font-bold">Tanggal Surat</h3>
+    <p class="py-4" id="tanggal-surat-view">01/01/2022</p>
+    <a class="btn btn-primary" id="file-surat-view" target="_blank" href="">Lihat File</a>
+  </div>
+</div>
+
+<body>
+  <div class="lg:mx-4">
+    <div class="drawer drawer-mobile">
+      <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+        <!-- Page content here -->
+        <%- include('../partials/navbar'); %>
+        <!-- Content -->
+        <div class="lg:text-2xl text-xl font-bold">Surat Masuk</div>
+        <!-- The button to open modal -->
+        <% if (user.role === 0 || user.role === 1) { %>
+          <div class="text-right mr-11"><label for="my-modal-4" onclick="resetData()" class="btn btn-success">Unggah Data</label></div>
+        <% } %>
+
+        <div class="grid grid-cols-12 gap-3">
+          <div class=" col-span-4">
+            <div class="form-control">
+              <label for="tahun-surat-masuk" class="label">
+                <span class="label-text label-required">Tahun</span>
+              </label>
+              <select type="text" name="tahun-surat-masuk" id="tahun-surat-masuk" class="select select-bordered" style="width: 100%;">
+                <option disabled selected>Pilih Tahun</option>
+                <% for(let i=0; i < tahunOption.length; i++) { %>
+                  <option value="<%= tahunOption[i] %>"><%= tahunOption[i] %></option>
+                <% } %>
+                <option value="0">Reset</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-3">
+          <div class="datatable">
+            <div class="overflow-x-auto">
+              <table id="table" class="table w-full" style="width: 100%;">
+                <thead>
+                  <tr class="text-center">
+                    <th>Nomor Surat</th>
+                    <th>Asal Instansi</th>
+                    <th>Perihal</th>
+                    <th>Detail</th>
+                    <% if (user.role===0 || user.role===1) { %>
+                      <th>Aksi</th>
+                    <% } %>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <% for(let i = 0; i < surat.length; i++) { %>
+                    <tr>
+                      <td><%= surat[i].no_surat %></td>
+                      <td><%= surat[i].instansi %></td>
+                      <td><%= surat[i].perihal %></td>
+                      <td>
+                        <label for="my-modal-3" onclick="viewSuratMasukClicked('<%= surat[i].no_surat %>', '<%= surat[i].instansi %>', '<%= surat[i].perihal %>', '<%= surat[i].tanggal_surat %>', '<%= surat[i].file_path %>')" class="btn btn-success">Lihat</label>
+                      </td>
+                      <% if (user.role===0 || user.role===1) { %>
+                        <td class="flex justify-center gap-2">
+                          <label for="my-modal-4" onclick="editSuratMasukClicked('<%= surat[i].no_surat %>', '<%= surat[i].instansi %>', '<%= surat[i].perihal %>', '<%= surat[i].tanggal_surat %>', '<%= surat[i].file_path %>', '<%= surat[i].id %>')" class="btn btn-warning">Edit</label>
+                          <button class="btn btn-error" onclick="deleteAction('<%= surat[i].id %>')">Hapus</button>
+                        </td>
+                      <% } %>
+                    </tr>
+                  <% } %>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- End Of Content -->
+
+        <!-- Footer -->
+        <footer class="footer footer-center p-4 ">
+          <div>
+            <p>Copyright © 2023 - All right reserved by SIPEDA</p>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+
+      </div>
+      <%- include('../partials/sidebar'); %>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <input type="checkbox" id="modal-global" class="modal-toggle" />
+  <label id="modal-global-container" for="modal-global" class="modal modal-bottom sm:modal-middle cursor-pointer">
+    <label class="modal-box p-8 relative">
+
+    </label>
+  </label>
+  <script>
+    const error = '<%= error %>';
+    const success = '<%= success %>';
+    const userRole = '<%= user.role %>'
+
+    if (error != "") {
+      Swal.fire({
+        title: 'Gagal!',
+        text: error,
+        icon: 'error',
+        timer: 3000,
+        timerProgressBar: true,
+        confirmButtonText: 'Kembali'
+      })
+    }
+
+    if (success != "") {
+      Swal.fire({
+        title: 'Berhasil!',
+        text: success,
+        icon: 'success',
+        timer: 3000,
+        timerProgressBar: true,
+        confirmButtonText: 'Kembali'
+      })
+    }
+
+    function deleteAction(id) {
+      Swal.fire({
+        title: 'Apakah anda yakin',
+        text: "Jika dihapus, data ini tidak bisa dipulihkan",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        cancelButtonText: 'Tidak!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/kegiatan/suratmasuk/delete?id=${id}`
+        }
+      })
+    }
+
+    function resetData() {
+      document.getElementById("id-surat-masuk").value = "0";
+      document.getElementById("nomorsurat").value = "";
+      document.getElementById("instansi").value = "";
+      document.getElementById("perihal").value = "";
+      document.getElementById("tanggal").value = ""
+    }
+
+    function editSuratMasukClicked(no, instansi, perihal, tanggal, file, id) {
+      document.getElementById("id-surat-masuk").value = id;
+      document.getElementById("nomorsurat").value = no;
+      document.getElementById("instansi").value = instansi;
+      document.getElementById("perihal").value = perihal;
+
+      const dateFormated = new Date(tanggal).toLocaleDateString().split("/");
+      document.getElementById("tanggal").valueAsDate = new Date(tanggal)
+    }
+
+    function viewSuratMasukClicked(no, instansi, perihal, tanggal, file) {
+      document.getElementById('detail-surat-masuk').classList.remove('hidden');
+      document.getElementById('no-surat-view').innerHTML = no;
+      document.getElementById('instansi-surat-view').innerHTML = instansi;
+      document.getElementById('perihal-surat-view').innerHTML = perihal;
+      document.getElementById('tanggal-surat-view').innerHTML = new Date(tanggal).toLocaleDateString();
+      document.getElementById('file-surat-view').href = ".." + file.split('public')[1]
+    }
+
+    const tahun = document.getElementById('tahun-surat-masuk');
+    tahun.addEventListener('change', (e) => {
+      if (e.target.value == "0") {
+        window.location.href = `/kegiatan/suratmasuk`
+      } else {
+        window.location.href = `/kegiatan/suratmasuk?tahun=${e.target.value}`
+      }
+      tahun.value = e.target.value
+    });
+  </script>
+</body>
+
+</html>

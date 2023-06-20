@@ -1,0 +1,118 @@
+<div class="drawer-side">
+  <label for="my-drawer-2" class="drawer-overlay"></label>
+  <ul class="menu p-4 w-64 bg-base-100 text-base-content">
+    <!-- Sidebar content here -->
+    <img src="../img/logo.png" alt="Logo" width="900" class="mx-auto">
+    <hr class="my-5">
+    <li class="<%= sidebar === 'dashboard' ? 'active' : '' %>">
+      <a class="flex justify-between" href="/dashboard">
+        <div class="flex justify-start">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
+            </path>
+          </svg>
+          <span class="pl-2 text-sm mt-1">Dashboard</span>
+        </div>
+
+        <div>
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </div>
+      </a>
+    </li>
+
+    <li class="<%= sidebar === 'kegiatan' ? 'active' : '' %>">
+      <a class="flex justify-between" href="/kegiatan">
+        <div class="flex justify-start">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 512 512">
+            <circle fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" cx="256" cy="56" r="40" />
+            <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
+              d="M204.23 274.44c2.9-18.06 4.2-35.52-.5-47.59-4-10.38-12.7-16.19-23.2-20.15L88 176.76c-12-4-23.21-10.7-24-23.94-1-17 14-28 29-24 0 0 88 31.14 163 31.14s162-31 162-31c18-5 30 9 30 23.79 0 14.21-11 19.21-24 23.94l-88 31.91c-8 3-21 9-26 18.18-6 10.75-5 29.53-2.1 47.59l5.9 29.63 37.41 163.9c2.8 13.15-6.3 25.44-19.4 27.74S308 489 304.12 476.28l-37.56-115.93q-2.71-8.34-4.8-16.87L256 320l-5.3 21.65q-2.52 10.35-5.8 20.48L208 476.18c-4 12.85-14.5 21.75-27.6 19.46s-22.4-15.59-19.46-27.74l37.39-163.83z" />
+          </svg>
+          <span class="pl-2 text-sm mt-1">Data Kegiatan</span>
+        </div>
+
+        <div>
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </div>
+      </a>
+    </li>
+
+    <li class="<%= sidebar === 'prestasi' ? 'active' : '' %>">
+      <a class="flex justify-between" href="/prestasi">
+        <div class="flex justify-start">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 512 512">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
+              d="M176 464h160M256 464V336M384 224c0-50.64-.08-134.63-.12-160a16 16 0 00-16-16l-223.79.26a16 16 0 00-16 15.95c0 30.58-.13 129.17-.13 159.79 0 64.28 83 112 128 112S384 288.28 384 224z" />
+            <path d="M128 96H48v16c0 55.22 33.55 112 80 112M384 96h80v16c0 55.22-33.55 112-80 112" fill="none"
+              stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+          </svg>
+          <span class="pl-2 text-sm mt-1">Data Prestasi</span>
+        </div>
+
+        <div>
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </div>
+      </a>
+    </li>
+
+    <li class="<%= sidebar === 'beasiswa' ? 'active' : '' %>">
+      <a class="flex justify-between" href="/beasiswa">
+        <div class="flex justify-start">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 512 512">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
+              d="M32 192L256 64l224 128-224 128L32 192z" />
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
+              d="M112 240v128l144 80 144-80V240M480 368V192M256 320v128" />
+          </svg>
+          <span class="pl-2 text-sm mt-1">Data Beasiswa</span>
+        </div>
+
+        <div>
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </div>
+      </a>
+    </li>
+
+    <% if (user.role === 0) { %>
+      <li class="<%= sidebar === 'pengguna' ? 'active' : '' %>">
+        <a class="flex justify-between" href="/pengguna">
+          <div class="flex justify-start">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 512 512">
+              <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+              <path
+                d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z"
+                fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
+            </svg>
+            <span class="pl-2 text-sm mt-1">Data Pengguna</span>
+          </div>
+      
+          <div>
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </a>
+      </li>
+    <% } %>
+  </ul>
+</div>

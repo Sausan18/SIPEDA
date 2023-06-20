@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIPEDA - Data Kegiatan</title>
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/app.js"></script>
+</head>
+
+<body>
+  <div class="lg:mx-4">
+    <div class="drawer drawer-mobile">
+      <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+        <!-- Page content here -->
+
+        <%- include('../partials/navbar'); %>
+
+        <!-- Content -->
+        <div class="mx-5 pt-5">
+          <div class="flex justify-between gap-2">
+            <div class="card w-96 bg-base-100 shadow-xl">
+              <figure class="px-10 pt-10">
+                <svg class="w-20 h-20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3">
+                  </path>
+                </svg>
+              </figure>
+              <div class="card-body items-center text-center">
+                <h2 class="card-title">Surat Masuk</h2> <br>
+                <div class="card-actions">
+                  <a href="/kegiatan/suratmasuk"><button class="btn btn-success">Lihat</button></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="card w-96 bg-base-100 shadow-xl">
+              <figure class="px-10 pt-10">
+                <svg class="w-20 h-20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75">
+                  </path>
+                </svg>
+              </figure>
+              <div class="card-body items-center text-center">
+                <h2 class="card-title">Surat Keluar</h2><br>
+                <div class="card-actions">
+                  <a href="/kegiatan/suratkeluar"><button class="btn btn-success">Lihat</button></a>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card w-96 bg-base-100 shadow-xl">
+              <figure class="px-10 pt-10">
+                <svg class="w-20 h-20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12">
+                  </path>
+                </svg>
+              </figure>
+              <div class="card-body items-center text-center">
+                <h2 class="card-title">Laporan Pertanggungjawaban</h2>
+                <div class="card-actions">
+                  <a href="/kegiatan/lpj"><button class="btn btn-success">Lihat</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- End Of Content -->
+
+        <!-- Footer -->
+        <footer class="footer footer-center p-4 ">
+          <div>
+            <p>Copyright © 2023 - All right reserved by SIPEDA</p>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+
+      </div>
+      <%- include('../partials/sidebar'); %>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <input type="checkbox" id="modal-global" class="modal-toggle" />
+  <label id="modal-global-container" for="modal-global" class="modal modal-bottom sm:modal-middle cursor-pointer">
+    <label class="modal-box p-8 relative">
+
+    </label>
+  </label>
+</body>
+
+</html>

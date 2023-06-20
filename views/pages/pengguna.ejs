@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIPEDA - Data Pengguna</title>
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<!--form -->
+<input type="checkbox" id="my-modal-4" class="modal-toggle" />
+<label for="my-modal-4" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <h2 class="font-bold text-xl lg:text-2xl my-4">Unggah Data Pengguna</h2>
+    <form action="/pengguna" id="form-add-pengguna" method="POST" enctype="multipart/form-data" show-validation>
+      <div class="form-control">
+        <label for="nama" class="label">
+          <span class="label-text label-required">Nama Pengguna</span>
+        </label>
+        <input type="text" name="nama" id="nama" class="input input-bordered" placeholder="masukkan nama pengguna" required>
+      </div>
+      <div class="form-control">
+        <label for="username" class="label">
+          <span class="label-text label-required">Username Pengguna</span>
+        </label>
+        <input type="text" name="username" id="username" class="input input-bordered"
+          placeholder="masukkan username pengguna" required>
+      </div>
+      <div class="form-control">
+        <label for="password" class="label">
+          <span class="label-text label-required">Password</span>
+        </label>
+        <input type="password" name="password" id="password" class="input input-bordered"
+          placeholder="masukkan password pengguna" required>
+      </div>
+      <div class="form-control">
+        <label for="role" class="label">
+          <span class="label-text label-required">Role</span>
+        </label>
+        <select type="text" name="role" id="role" class="select select-bordered" style="width: 100%;" required>
+          <option disabled selected>Pilih Role</option>
+          <option value="0">Admin</option>
+          <option value="1">Himpunan</option>
+          <option value="2">Jurusan</option>
+        </select>
+      </div>
+      <br>
+      <div class="form-control w-full max-w-xs">
+        <label for="password" class="label">
+          <span class="label-text label-required">Foto</span>
+        </label>
+        <input type="file" accept="image/*" id="files" name="files" class="file-input file-input-bordered w-full max-w-xs" required />
+      </div>
+      <div class="modal-action">
+        <button type="submit" form="form-add-pengguna" class="btn btn-primary btn-block">Unggah</button>
+      </div>
+      <input type="hidden" name="id-pengguna" id="id-pengguna" value="0">
+    </form>
+  </label>
+</label>
+<!-- end form -->
+
+<input type="checkbox" id="my-modal-3" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box relative">
+    <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    <h3 class="text-lg font-bold">Nama</h3>
+    <p class="py-4" id="nama-view">Sausan Nabilah</p>
+    <h3 class="text-lg font-bold">Username</h3>
+    <p class="py-4" id="username-view">sausan</p>
+      <h3 class="text-lg font-bold">Role</h3>
+      <p class="py-4" id="role-view">Admin</p>
+    <a class="btn btn-primary" id="foto-view" target="_blank" href="">Lihat Foto</a>
+  </div>
+</div>
+
+<body>
+  <div class="lg:mx-4">
+    <div class="drawer drawer-mobile">
+      <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+        <!-- Page content here -->
+
+        <%- include('../partials/navbar'); %>
+
+          <!-- Content -->
+          <div class="lg:text-2xl text-xl font-bold">Data Pengguna</div>
+          <!-- The button to open modal -->
+          <div class="text-right mr-11"><label for="my-modal-4" onclick="resetData()" class="btn btn-success">Tambah Pengguna</label></div>
+          <div class="grid grid-cols-12 gap-3">
+            <div class=" col-span-4">
+              <div class="form-control">
+                <label class="label" for="filter_role">
+                  <span class="label-text">Role</span>
+                </label>
+                <select id="filter_role" class="select select-bordered">
+                  <option disabled selected>Filter Role</option>
+                    <option value="0">Admin</option>
+                    <option value="1">Himpunan</option>
+                    <option value="2">Jurusan</option>
+                    <option value="x">Reset</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="my-3">
+            <div class="datatable">
+              <div class="overflow-x-auto">
+                <table id="table" class="table w-full" style="width: 100%;">
+                  <thead>
+                    <tr class="text-center">
+                      <th>Foto</th>
+                      <th>Nama</th>
+                      <th>Username</th>
+                      <th>Role</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    <% for(let i=0; i < users.length; i++) { %>
+                      <tr>
+                        <td class="btn-circle avatar" style="padding: 0 !important;">
+                          <img class="rounded-full" src="<%= users[i].foto_path.split('public/')[1] %>" />
+                        </td>
+                        <td>
+                          <%= users[i].nama %>
+                        </td>
+                        <td>
+                          <%= users[i].username %>
+                        </td>
+                        <td>
+                          <%= users[i].role == 0 ? "Admin" : users[i].role == 1 ? "Himpunan" : "Jurusan" %>
+                        </td>
+                        <td class="flex justify-center gap-2">
+                          <label for="my-modal-4"
+                            onclick="editUserClicked('<%= users[i].nama %>', '<%= users[i].username %>', '<%= users[i].role %>', '<%= users[i].foto_path %>', '<%= users[i].id %>')"
+                            class="btn btn-warning">Edit</label>
+                          <button class="btn btn-error" onclick="deleteAction('<%= users[i].id %>')">Hapus</button>
+                        </td>
+                      </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- End Of Content -->
+
+          <!-- Footer -->
+          <footer class="footer footer-center p-4 ">
+            <div>
+              <p>Copyright © 2023 - All right reserved by SIPEDA</p>
+            </div>
+          </footer>
+          <!-- End of Footer -->
+
+      </div>
+      <%- include('../partials/sidebar'); %>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <input type="checkbox" id="modal-global" class="modal-toggle" />
+  <label id="modal-global-container" for="modal-global" class="modal modal-bottom sm:modal-middle cursor-pointer">
+    <label class="modal-box p-8 relative">
+
+    </label>
+  </label>
+  <script>
+
+    const error = '<%= error %>';
+    const success = '<%= success %>';
+
+    if (error != "") {
+      Swal.fire({
+        title: 'Gagal!',
+        text: error,
+        icon: 'error',
+        timer: 3000,
+        timerProgressBar: true,
+        confirmButtonText: 'Kembali'
+      })
+    }
+
+    if (success != "") {
+      Swal.fire({
+        title: 'Berhasil!',
+        text: success,
+        icon: 'success',
+        timer: 3000,
+        timerProgressBar: true,
+        confirmButtonText: 'Kembali'
+      })
+    }
+
+    function deleteAction(id) {
+      Swal.fire({
+        title: 'Apakah anda yakin',
+        text: "Jika dihapus, data ini tidak bisa dipulihkan",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        cancelButtonText: 'Tidak!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `/beasiswa/delete?id=${id}`
+        }
+      })
+    }
+
+    function resetData() {
+      document.getElementById('nama').value = "";
+      document.getElementById('username').value = "";
+      document.getElementById('id-pengguna').value = "0";
+      document.getElementById("role").firstElementChild.selected = true
+    }
+
+    function editUserClicked(nama, username, role, foto, id) {
+      document.getElementById('nama').value = nama;
+      document.getElementById('username').value = username;
+      document.getElementById('role').value = role;
+      document.getElementById('id-pengguna').value = id;
+      const roleOption = document.getElementById("role");
+      for (var i = 0; i < roleOption.childNodes.length; i++) {
+        var value = roleOption.childNodes[i].innerHTML;
+        if (value == tahun) {
+          roleOption.childNodes[i].selected = true
+        }
+      }
+    }
+
+    const tahun = document.getElementById('filter_role');
+    tahun.addEventListener('change', (e) => {
+      if (e.target.value == "x") {
+        window.location.href = `/pengguna`
+      } else {
+        window.location.href = `/pengguna?role=${e.target.value}`
+      }
+      tahun.value = e.target.value
+    });
+  </script>
+</body>
+
+</html>
