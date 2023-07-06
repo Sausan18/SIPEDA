@@ -47,6 +47,7 @@ async function setupDb() {
         tanggal_pelaksana DATE,
         deskripsi varchar(1000),
         file_path varchar(255),
+        url_photo varchar(1000),
         user_id int,
         PRIMARY KEY (id),
         FOREIGN KEY (user_id) REFERENCES users(id)

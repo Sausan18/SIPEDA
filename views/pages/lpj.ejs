@@ -55,6 +55,12 @@
         <input type="date" name="tanggal" id="tanggal" class="input input-bordered"
           placeholder="masukkan tanggal pelaksanaan" required>
       </div>
+      <div class="form-control">
+        <label for="url_photo" class="label">
+        <span class="label-text label-required">Link Foto</span>
+        </label>
+        <input type="text" name="url_photo" id="url_photo" class="input input-bordered" placeholder="masukkan link foto">
+      </div>
       <br>
       <div>
         <textarea name="deskripsi" id="deskripsi" class="textarea textarea-bordered w-full" placeholder="deskripsi kegiatan" required></textarea>
@@ -87,7 +93,10 @@
     <p class="py-4" id="tanggal-lpj-view">01/01/2022</p>
     <h3 class="text-lg font-bold">Deskripsi Kegiatan</h3>
     <p class="py-4" id="deskripsi-lpj-view">Monev adalah suatu kegiatan yang dilakukan untuk mengevaluasi kinerja himpunan</p>
-    <a class="btn btn-primary" id="file-lpj-view" target="_blank" href="">Lihat File</a>
+    <div>
+      <a class="btn btn-primary" id="url_photo-view" target="_blank" href="">Lihat Foto</a>
+      <a class="btn btn-primary" id="file-lpj-view" target="_blank" href="">Lihat File</a>
+      </div>
   </div>
 </div>
 
@@ -153,13 +162,13 @@
                       </td>
                       <td>
                         <label for="my-modal-3"
-                          onclick="viewLpjClicked('<%= surat[i].nama %>', '<%= surat[i].penanggungjawab %>', '<%= surat[i].departemen %>', '<%= surat[i].tanggal_pelaksana %>', '<%= surat[i].deskripsi %>', '<%= surat[i].file_path %>')"
+                          onclick="viewLpjClicked('<%= surat[i].nama %>', '<%= surat[i].penanggungjawab %>', '<%= surat[i].departemen %>', '<%= surat[i].tanggal_pelaksana %>', '<%= surat[i].deskripsi %>', '<%= surat[i].file_path %>', '<%= surat[i].url_photo %>')"
                           class="btn btn-success">Lihat</label>
                       </td>
                       <% if (user.role===0 || user.role===1) { %>
                         <td class="flex justify-center gap-2">
                           <label for="my-modal-4"
-                            onclick="editLpjClicked('<%= surat[i].nama %>', '<%= surat[i].penanggungjawab %>', '<%= surat[i].departemen %>', '<%= surat[i].tanggal_pelaksana %>', '<%= surat[i].deskripsi %>', '<%= surat[i].file_path %>', '<%= surat[i].id %>')"
+                            onclick="editLpjClicked('<%= surat[i].nama %>', '<%= surat[i].penanggungjawab %>', '<%= surat[i].departemen %>', '<%= surat[i].tanggal_pelaksana %>', '<%= surat[i].deskripsi %>', '<%= surat[i].file_path %>', '<%= surat[i].url_photo %>', '<%= surat[i].id %>')"
                             class="btn btn-warning">Edit</label>
                           <button class="btn btn-error" onclick="deleteAction('<%= surat[i].id %>')">Hapus</button>
                         </td>
@@ -246,13 +255,15 @@
       document.getElementById("id-surat-masuk").value = "0";
       document.getElementById("departemen").firstElementChild.selected = true;
       document.getElementById("tanggal").value = "";
+      document.getElementById("url_photo").value = "";
     }
 
-    function editLpjClicked(nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path, id) {
+    function editLpjClicked(nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path, url_photo, id) {
       document.getElementById("namakegiatan").value = nama;
       document.getElementById("penanggungjawab").value = penanggungjawab;
       document.getElementById("deskripsi").value = deskripsi;
       document.getElementById("id-surat-masuk").value = id;
+      document.getElementById("url_photo").value = url_photo;
 
       const departemenOption = document.getElementById("departemen");
       for (var i = 0; i < departemenOption.childNodes.length; i++) {
@@ -268,13 +279,14 @@
     }
 
 
-    function viewLpjClicked(nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path) {
+    function viewLpjClicked(nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path, url_photo) {
       document.getElementById("nama-lpj-view").innerHTML = nama;
       document.getElementById("penanggungjawab-lpj-view").innerHTML = penanggungjawab;
       document.getElementById("departemen-lpj-view").innerHTML = departemen;
       document.getElementById("tanggal-lpj-view").innerHTML = new Date(tanggal_pelaksana).toLocaleDateString();
       document.getElementById("deskripsi-lpj-view").innerHTML = deskripsi;
       document.getElementById('file-lpj-view').href = ".." + file_path.split('public')[1]
+      document.getElementById("url_photo-view").href = url_photo;
     }
 
     const tahun = document.getElementById('tahun-lpj');

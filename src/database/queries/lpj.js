@@ -11,15 +11,16 @@ async function findAllLpjByTahun(tahun) {
 }
 
 async function createLpj(data) {
-  const result = await query(`INSERT INTO lpj (nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path, user_id) 
+  const result = await query(`INSERT INTO lpj (nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path, url_photo, user_id)
     VALUES ('${data.nama}',
-      '${data.penanggungjawab}',
-      '${data.departemen}',
-      '${data.tanggal_pelaksana}',
-      '${data.deskripsi}',
-      '${data.file_path}',
-      '${data.user_id}')
-  `);
+    '${data.penanggungjawab}',
+    '${data.departemen}',
+    '${data.tanggal_pelaksana}',
+    '${data.deskripsi}',
+    '${data.file_path}',
+    '${data.url_photo}',
+    '${data.user_id}')
+    `);
 
   let response = {
     error: true,
@@ -39,12 +40,13 @@ async function createLpj(data) {
 async function updateLpjById(id, data) {
   const result = await query(`UPDATE lpj
     SET nama = '${data.nama}',
-      penanggungjawab = '${data.penanggungjawab}',
-      departemen = '${data.departemen}',
-      tanggal_pelaksana = '${data.tanggal_pelaksana}',
-      deskripsi = '${data.deskripsi}',
-      file_path = '${data.file_path}',
-      user_id = '${data.user_id}'
+    penanggungjawab = '${data.penanggungjawab}',
+    departemen = '${data.departemen}',
+    tanggal_pelaksana = '${data.tanggal_pelaksana}',
+    deskripsi = '${data.deskripsi}',
+    file_path = '${data.file_path}',
+    url_photo = '${data.url_photo}',
+    user_id = '${data.user_id}'
     WHERE id = ${id}
   `);
 

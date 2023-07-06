@@ -248,6 +248,7 @@ router.get("/lpj", async (req, res) => {
     surat = await findAllLpjByTahun(tahun);
   }
 
+
   const error = req.flash('error');
   const success = req.flash('success');
   res.render('pages/lpj', {
@@ -289,6 +290,7 @@ router.post("/lpj", upload.array('files'), async (req, res) => {
       tanggal_pelaksana: body.tanggal,
       deskripsi: body.deskripsi,
       file_path: filePath ? filePath.split('\\').join("/") : null,
+      url_photo: body.url_photo,
       user_id: user.id
     })
 
@@ -312,6 +314,7 @@ router.post("/lpj", upload.array('files'), async (req, res) => {
       tanggal_pelaksana: body.tanggal,
       deskripsi: body.deskripsi,
       file_path: filePath ? filePath.split('\\').join("/") : null,
+      url_photo: body.url_photo,
       user_id: user.id
     });
 

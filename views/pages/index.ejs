@@ -45,6 +45,11 @@
     <h3 class="text-lg font-bold">Deskripsi Kegiatan</h3>
     <p class="py-4" id="deskripsi-lpj-view">Monev adalah suatu kegiatan yang dilakukan untuk mengevaluasi kinerja
       himpunan</p>
+    <div>
+      <a class="btn btn-primary" id="url_photo-view" target="_blank" href="">Lihat Foto</a>
+      <a class="btn btn-primary" id="file-lpj-view" target="_blank" href="">Lihat File</a>
+    </div>
+
   </div>
 </div>
 
@@ -59,6 +64,24 @@
     <div id="container-content-public" class="mt-10">
       <div id="content-public">
         <div class="lg:text-2xl text-xl font-bold mb-10">Kegiatan Himpunan Mahasiswa Informatika</div>
+        <div class="grid grid-cols-12 gap-1">
+          <div class=" col-span-4">
+            <div class="form-control">
+              <label for="tahun-lpj" class="label">
+                <span class="label-text label-required">Tahun Periode</span>
+              </label>
+              <select type="text" name="tahun-lpj" id="tahun-lpj" class="select select-bordered" style="width: 100%;">
+                <option disabled selected>Pilih Tahun</option>
+                <% for(let i=0; i < tahunOption.length; i++) { %>
+                  <option value="<%= tahunOption[i] %>">
+                    <%= tahunOption[i] %>
+                  </option>
+                  <% } %>
+                    <option value="0">Reset</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div class="my-3 w-full">
           <div class="datatable">
             <div class="overflow-x-auto">
@@ -85,7 +108,7 @@
                       </td>
                       <td>
                         <label for="my-modal-3"
-                          onclick="viewLpjClicked('<%= surat[i].nama %>', '<%= surat[i].penanggungjawab %>', '<%= surat[i].departemen %>', '<%= surat[i].tanggal_pelaksana %>', '<%= surat[i].deskripsi %>', '<%= surat[i].file_path %>')"
+                          onclick="viewLpjClicked('<%= surat[i].nama %>', '<%= surat[i].penanggungjawab %>', '<%= surat[i].departemen %>', '<%= surat[i].tanggal_pelaksana %>', '<%= surat[i].deskripsi %>', '<%= surat[i].file_path %>', '<%= surat[i].url_photo %>')"
                           class="btn btn-success">Lihat</label>
                       </td>
                     </tr>
@@ -107,13 +130,25 @@
     </div>
   </div>
   <script>
-    function viewLpjClicked(nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path) {
+    function viewLpjClicked(nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path, url_photo) {
         document.getElementById("nama-lpj-view").innerHTML = nama;
         document.getElementById("penanggungjawab-lpj-view").innerHTML = penanggungjawab;
         document.getElementById("departemen-lpj-view").innerHTML = departemen;
         document.getElementById("tanggal-lpj-view").innerHTML = new Date(tanggal_pelaksana).toLocaleDateString();
         document.getElementById("deskripsi-lpj-view").innerHTML = deskripsi;
+        document.getElementById("url_photo-view").href = url_photo;
+        document.getElementById('file-lpj-view').href = ".." + file_path.split('public')[1]
       }
+
+      const tahun = document.getElementById('tahun-lpj');
+      tahun.addEventListener('change', (e) => {
+        if (e.target.value == "0") {
+          window.location.href = `/`
+        } else {
+          window.location.href = `/?tahun=${e.target.value}`
+        }
+      tahun.value = e.target.value
+    })
   </script>
 </body>
 

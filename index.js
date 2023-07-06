@@ -48,7 +48,7 @@ app.get('/', async (req, res) => {
   
   let tahunOption = [];
   let surat = await findAllLpj();
-  surat.forEach((surat) => tahunOption.push(surat.tanggal_pelaksana));
+  surat.forEach((surat) => tahunOption.push(new Date(surat.tanggal_pelaksana).getFullYear()));
   tahunOption = [...new Set(tahunOption)];
 
   if (tahun) {
