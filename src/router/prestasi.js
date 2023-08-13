@@ -40,7 +40,7 @@ router.post("/", upload.array('files'), async (req, res) => {
   if (body.nim == '' ||
       body.namamahasiswa == '' ||
       body.prestasi == '' ||
-      body.tahun == '') {
+      body.tahun == 'Pilih Tahun') {
         req.flash('error', 'Form tidak boleh ada yang kosong');
         return res.redirect('prestasi')
       }

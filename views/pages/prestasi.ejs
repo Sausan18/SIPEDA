@@ -42,7 +42,7 @@
           <span class="label-text label-required">Tahun</span>
         </label>
         <select type="text" name="tahun" id="tahun" class="select select-bordered" style="width: 100%;" required>
-          <option disabled selected>Pilih Tahun</option>
+          <option selected>Pilih Tahun</option>
           <option value="2020">2020</option>
           <option value="2021">2021</option>
           <option value="2022">2022</option>
@@ -134,7 +134,7 @@
                       </td>
                       <td>
                         <label for="my-modal-3"
-                          onclick="window.open('<%= prestasi[i].file_path ? `/localfile/` + prestasi[i].file_path.split(`public/files/`)[1] : `` %>')"
+                          onclick="viewFile('<%= prestasi[i].file_path %>')"
                           class="btn btn-success">Lihat</label>
                       </td>
                       <% if (user.role===0 || user.role===1) { %>
@@ -200,6 +200,21 @@
         timerProgressBar: true,
         confirmButtonText: 'Kembali'
       })
+    }
+
+    function viewFile(file) {
+      if (file == null || file == 'null') {
+        Swal.fire({
+          title: 'Gagal!',
+          text: 'File tidak ada',
+          icon: 'error',
+          timer: 3000,
+          timerProgressBar: true,
+          confirmButtonText: 'Kembali'
+        })
+      } else {
+        window.open(file)
+      }
     }
 
     function deleteAction(id) {

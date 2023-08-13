@@ -268,7 +268,7 @@ router.post("/lpj", upload.array('files'), async (req, res) => {
   
   if (body.namakegiatan == '' ||
       body.penanggungjawab == '' ||
-      body.depertemen == '' ||
+      body.departemen == 'Departemen' ||
       body.tanggal == '' ||
       body.deskripsi == '') {
         req.flash('error', 'Form tidak boleh ada yang kosong');

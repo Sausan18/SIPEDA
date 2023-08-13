@@ -34,7 +34,7 @@
       <br>
       <div>
         <select name="departemen" id="departemen" class="select select-bordered w-full max-w-xs" required>
-          <option disabled selected>Departemen</option>
+          <option selected>Departemen</option>
           <option>Departemen Human Resource (HR)</option>
           <option>Departemen Penelitian dan Pengembangan Mahasiswa (PPM)</option>
           <option>Departemen Pengelolaan Kesejahteraan Mahasiswa (PKM)</option>
@@ -94,7 +94,7 @@
     <h3 class="text-lg font-bold">Deskripsi Kegiatan</h3>
     <p class="py-4" id="deskripsi-lpj-view">Monev adalah suatu kegiatan yang dilakukan untuk mengevaluasi kinerja himpunan</p>
     <div>
-      <a class="btn btn-primary" id="url_photo-view" target="_blank" href="">Lihat Foto</a>
+      <div class="btn btn-primary" id="url_photo-view">Lihat Foto</div>
       <a class="btn btn-primary" id="file-lpj-view" target="_blank" href="">Lihat File</a>
       </div>
   </div>
@@ -286,7 +286,20 @@
       document.getElementById("tanggal-lpj-view").innerHTML = new Date(tanggal_pelaksana).toLocaleDateString();
       document.getElementById("deskripsi-lpj-view").innerHTML = deskripsi;
       document.getElementById('file-lpj-view').href = ".." + file_path.split('public')[1]
-      document.getElementById("url_photo-view").href = url_photo;
+      document.getElementById("url_photo-view").addEventListener('click', (e) => {
+        if (url_photo == null || url_photo.length < 1) {
+          Swal.fire({
+            title: 'Gagal!',
+            text: 'Foto tidak ada',
+            icon: 'error',
+            timer: 3000,
+            timerProgressBar: true,
+            confirmButtonText: 'Kembali'
+          })
+        } else {
+          window.open(url_photo, '_blank')
+        }
+      });
     }
 
     const tahun = document.getElementById('tahun-lpj');
