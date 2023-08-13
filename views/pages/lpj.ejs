@@ -286,7 +286,7 @@
       document.getElementById("tanggal-lpj-view").innerHTML = new Date(tanggal_pelaksana).toLocaleDateString();
       document.getElementById("deskripsi-lpj-view").innerHTML = deskripsi;
       document.getElementById('file-lpj-view').href = ".." + file_path.split('public')[1]
-      document.getElementById("url_photo-view").addEventListener('click', (e) => {
+      document.getElementById("url_photo-view").onclick = () => {
         if (url_photo == null || url_photo.length < 1) {
           Swal.fire({
             title: 'Gagal!',
@@ -299,7 +299,7 @@
         } else {
           window.open(url_photo, '_blank')
         }
-      });
+      };
     }
 
     const tahun = document.getElementById('tahun-lpj');
@@ -310,7 +310,7 @@
         window.location.href = `/kegiatan/lpj?tahun=${e.target.value}`
       }
       tahun.value = e.target.value
-    })
+    });
   </script>
 </body>
 
