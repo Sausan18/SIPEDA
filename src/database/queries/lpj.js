@@ -10,6 +10,11 @@ async function findAllLpjByTahun(tahun) {
   return row;
 }
 
+async function findAllLpjSearch(search) {
+  const row = await query(`SELECT * FROM lpj WHERE nama LIKE '%${search}%' OR penanggungjawab LIKE '%${search}%' OR departemen LIKE '%${search}%' ORDER BY id DESC`)
+  return row;
+}
+
 async function createLpj(data) {
   const result = await query(`INSERT INTO lpj (nama, penanggungjawab, departemen, tanggal_pelaksana, deskripsi, file_path, url_photo, user_id)
     VALUES ('${data.nama}',
@@ -88,5 +93,6 @@ module.exports = {
   findAllLpjByTahun,
   createLpj,
   updateLpjById,
-  deleteLpjById
+  deleteLpjById,
+  findAllLpjSearch
 }

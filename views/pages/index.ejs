@@ -64,22 +64,26 @@
     <div id="container-content-public" class="mt-10">
       <div id="content-public">
         <div class="lg:text-2xl text-xl font-bold mb-10">Kegiatan Himpunan Mahasiswa Informatika</div>
-        <div class="grid grid-cols-12 gap-1">
-          <div class=" col-span-4">
-            <div class="form-control">
-              <label for="tahun-lpj" class="label">
-                <span class="label-text label-required">Tahun Periode</span>
-              </label>
-              <select type="text" name="tahun-lpj" id="tahun-lpj" class="select select-bordered" style="width: 100%;">
-                <option disabled selected>Pilih Tahun</option>
-                <% for(let i=0; i < tahunOption.length; i++) { %>
-                  <option value="<%= tahunOption[i] %>">
-                    <%= tahunOption[i] %>
-                  </option>
-                  <% } %>
-                    <option value="0">Reset</option>
-              </select>
-            </div>
+        <div class="flex gap-3">
+          <div class="form-control">
+            <label for="tahun-lpj" class="label">
+              <span class="label-text label-required">Tahun Periode</span>
+            </label>
+            <select type="text" name="tahun-lpj" id="tahun-lpj" class="select select-bordered" style="width: 100%;">
+              <option disabled selected>Pilih Tahun</option>
+              <% for(let i=0; i < tahunOption.length; i++) { %>
+                <option value="<%= tahunOption[i] %>">
+                  <%= tahunOption[i] %>
+                </option>
+                <% } %>
+                  <option value="0">Reset</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <form action="" method="get">
+              <input type="text" name="search" id="search" class="input input-bordered" placeholder="Cari"/>
+              <button type="submit" class="btn btn-primary">Cari</button>
+            </form>
           </div>
         </div>
         <div class="my-3 w-full">

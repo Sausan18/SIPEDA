@@ -10,6 +10,11 @@ async function findAllPrestasiByTahun(tahun) {
   return row;
 }
 
+async function findAllPrestasiSearch(search) {
+  const row = await query(`SELECT * FROM prestasi WHERE nim LIKE '%${search}%' OR nama LIKE '%${search}%' OR prestasi LIKE '%${search}%' ORDER BY id DESC`)
+  return row;
+}
+
 async function createPrestasi(data) {
   const result = await query(`INSERT INTO prestasi (nim, nama, prestasi, tahun, file_path, user_id)
     VALUES (
@@ -85,5 +90,6 @@ module.exports = {
   findAllPrestasi,
   findAllPrestasiByTahun,
   updatePrestasiById,
-  deletePrestasiById
+  deletePrestasiById,
+  findAllPrestasiSearch
 }

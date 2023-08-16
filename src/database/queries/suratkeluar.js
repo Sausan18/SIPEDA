@@ -10,6 +10,11 @@ async function findAllSuratKeluarByTahun(tahun) {
   return row;
 }
 
+async function findAllSuratKeluarSearch(search) {
+  const row = await query(`SELECT * FROM surat_keluar WHERE no_surat LIKE '%${search}%' OR perihal LIKE '%${search}%' OR tujuan LIKE '%${search}%' ORDER BY id DESC`)
+  return row;
+}
+
 async function findOneSuratKeluarByNo(no) {
   const row = await query(`SELECT * FROM surat_keluar WHERE no_surat='${no}'`);
   if (row.length > 0) return row[0]
@@ -87,5 +92,6 @@ module.exports = {
   createSuratKeluar,
   findOneSuratKeluarByNo,
   updateSuratKeluarById,
-  deleteSuratKeluarById
+  deleteSuratKeluarById,
+  findAllSuratKeluarSearch
 }

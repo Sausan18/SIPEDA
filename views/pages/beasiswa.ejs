@@ -83,22 +83,26 @@
             <label for="my-modal-4" onclick="resetData()" class="btn btn-success">Unggah Data</label>
           <% } %>
         </div>
-        <div class="grid grid-cols-12 gap-3">
-          <div class=" col-span-4">
-            <div class="form-control">
-              <label class="label" for="filter_tahun">
-                <span class="label-text">Tahun</span>
-              </label>
-              <select id="filter_tahun" class="select select-bordered">
-                <option disabled selected>Pilih Tahun</option>
-                <% for(let i=0; i < tahunOption.length; i++) { %>
-                  <option value="<%= tahunOption[i] %>">
-                    <%= tahunOption[i] %>
-                  </option>
-                <% } %>
-                <option value="0">Reset</option>
-              </select>
-            </div>
+        <div class="flex gap-3">
+          <div class="form-control">
+            <label class="label" for="filter_tahun">
+              <span class="label-text">Tahun</span>
+            </label>
+            <select id="filter_tahun" class="select select-bordered">
+              <option disabled selected>Pilih Tahun</option>
+              <% for(let i=0; i < tahunOption.length; i++) { %>
+                <option value="<%= tahunOption[i] %>">
+                  <%= tahunOption[i] %>
+                </option>
+              <% } %>
+              <option value="0">Reset</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <form action="" method="get">
+              <input type="text" name="search" id="search" class="input input-bordered" placeholder="Cari"/>
+              <button type="submit" class="btn btn-primary">Cari</button>
+            </form>
           </div>
         </div>
 

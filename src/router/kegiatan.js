@@ -1,9 +1,9 @@
 const getUser = require("../utils/getUser");
 const multer = require("multer");
 const fs = require("fs");
-const { findAllSuratKeluarByTahun, findAllSuratKeluar, findOneSuratKeluarByNo, createSuratKeluar, updateSuratKeluarById, deleteSuratKeluarById } = require("../database/queries/suratkeluar");
-const { findAllSuratMasuk, findOneSuratMasukByNo, createSuratMasuk, findAllSuratMasukByTahun, updateSuratMasukById, deleteSuratMasukById } = require("../database/queries/suratmasuk");
-const { createLpj, updateLpjById, findAllLpjByTahun, findAllLpj, deleteLpjById } = require("../database/queries/lpj");
+const { findAllSuratKeluarByTahun, findAllSuratKeluar, findOneSuratKeluarByNo, createSuratKeluar, updateSuratKeluarById, deleteSuratKeluarById, findAllSuratKeluarSearch } = require("../database/queries/suratkeluar");
+const { findAllSuratMasuk, findOneSuratMasukByNo, createSuratMasuk, findAllSuratMasukByTahun, updateSuratMasukById, deleteSuratMasukById, findAllSuratMasukSearch } = require("../database/queries/suratmasuk");
+const { createLpj, updateLpjById, findAllLpjByTahun, findAllLpj, deleteLpjById, findAllLpjSearch } = require("../database/queries/lpj");
 const upload = multer({ dest: "public/files/" });
 const path = require("path")
 
@@ -22,7 +22,7 @@ router.get("/suratmasuk", async (req, res) => {
   const user = await getUser(req, res);
   if (!user) return res.redirect("/login")
   user.foto_path = "public/" + user.foto_path.split("public")[1]
-  const { tahun } = req.query;
+  const { tahun, search } = req.query;
 
   let tahunOption = [];
   let surat = await findAllSuratMasuk();
@@ -32,6 +32,10 @@ router.get("/suratmasuk", async (req, res) => {
 
   if (tahun) {
     surat = await findAllSuratMasukByTahun(tahun);
+  }
+
+  if (search) {
+    surat = await findAllSuratMasukSearch(search);
   }
 
   const error = req.flash('error');
@@ -129,7 +133,7 @@ router.get("/suratkeluar", async (req, res) => {
   if (!user) return res.redirect("/login")
   user.foto_path = "public/" + user.foto_path.split("public")[1]
 
-  const { tahun } = req.query;
+  const { tahun, search } = req.query;
 
   let tahunOption = [];
   let surat = await findAllSuratKeluar();
@@ -138,6 +142,10 @@ router.get("/suratkeluar", async (req, res) => {
 
   if (tahun) {
     surat = await findAllSuratKeluarByTahun(tahun);
+  }
+
+  if (search) {
+    surat = await findAllSuratKeluarSearch(search);
   }
 
   const error = req.flash('error');
@@ -237,7 +245,7 @@ router.get("/lpj", async (req, res) => {
   if (!user) return res.redirect("/login")
   user.foto_path = "public/" + user.foto_path.split("public")[1]
 
-  const { tahun } = req.query;
+  const { tahun, search } = req.query;
 
   let tahunOption = [];
   let surat = await findAllLpj();
@@ -246,6 +254,10 @@ router.get("/lpj", async (req, res) => {
 
   if (tahun) {
     surat = await findAllLpjByTahun(tahun);
+  }
+
+  if (search) {
+    surat = await findAllLpjSearch(search);
   }
 
 

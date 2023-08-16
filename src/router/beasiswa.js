@@ -1,4 +1,4 @@
-const { findAllBeasiswaByTahun, findAllBeasiswa, createBeasiswa, updateBeasiswaById, deleteBeasiswaById } = require("../database/queries/beasiswa");
+const { findAllBeasiswaByTahun, findAllBeasiswa, createBeasiswa, updateBeasiswaById, deleteBeasiswaById, findAllBeasiswaSearch } = require("../database/queries/beasiswa");
 const multer = require("multer");
 const getUser = require("../utils/getUser");
 const upload = multer({ dest: "public/files/" });
@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   const user = await getUser(req, res);
   if (!user) return res.redirect("/login");
 
-  const { tahun } = req.query;
+  const { tahun, search } = req.query;
 
   let tahunOption = [];
   let beasiswa = await findAllBeasiswa();
@@ -20,6 +20,10 @@ router.get("/", async (req, res) => {
 
   if (tahun) {
     beasiswa = await findAllBeasiswaByTahun(tahun);
+  }
+
+  if (search) {
+    beasiswa = await findAllBeasiswaSearch(search);
   }
 
   const error = req.flash('error');

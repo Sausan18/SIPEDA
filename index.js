@@ -11,7 +11,7 @@ require("dotenv").config();
 const setupDb = require('./src/database/queries/setup');
 const { findAllSuratMasuk, findAllSuratMasukByTahun } = require('./src/database/queries/suratmasuk');
 const { findAllSuratKeluar, findAllSuratKeluarByTahun } = require('./src/database/queries/suratkeluar');
-const { findAllLpj, findAllLpjByTahun } = require('./src/database/queries/lpj');
+const { findAllLpj, findAllLpjByTahun, findAllLpjSearch } = require('./src/database/queries/lpj');
 
 // Express app
 const app = express()
@@ -44,7 +44,7 @@ setupDb()
 
 app.get('/', async (req, res) => {
 
-  const { tahun } = req.query;
+  const { tahun, search } = req.query;
   
   let tahunOption = [];
   let surat = await findAllLpj();
@@ -53,6 +53,10 @@ app.get('/', async (req, res) => {
 
   if (tahun) {
     surat = await findAllLpjByTahun(tahun);
+  }
+
+  if (search) {
+    surat = await findAllLpjSearch(search);
   }
   res.render('pages/index', {
     surat,

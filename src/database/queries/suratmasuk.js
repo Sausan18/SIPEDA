@@ -10,6 +10,11 @@ async function findAllSuratMasukByTahun(tahun) {
   return row;
 }
 
+async function findAllSuratMasukSearch(search) {
+  const row = await query(`SELECT * FROM surat_masuk WHERE no_surat LIKE '%${search}%' OR instansi LIKE '%${search}%' OR perihal LIKE '%${search}%' ORDER BY id DESC`)
+  return row;
+}
+
 async function findOneSuratMasukByNo(no) {
   const row = await query(`SELECT * FROM surat_masuk WHERE no_surat='${no}'`);
   if (row.length > 0) return row[0]
@@ -87,5 +92,6 @@ module.exports = {
   createSuratMasuk,
   findOneSuratMasukByNo,
   updateSuratMasukById,
-  deleteSuratMasukById
+  deleteSuratMasukById,
+  findAllSuratMasukSearch
 }

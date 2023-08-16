@@ -10,6 +10,11 @@ async function findAllBeasiswaByTahun(tahun) {
   return row;
 }
 
+async function findAllBeasiswaSearch(search) {
+  const row = await query(`SELECT * FROM beasiswa WHERE nim LIKE '%${search}%' OR nama LIKE '%${search}%' OR nama_beasiswa LIKE '%${search}%' ORDER BY id DESC`)
+  return row;
+}
+
 async function createBeasiswa(data) {
   const result = await query(`INSERT INTO beasiswa (nim, nama, nama_beasiswa, tahun, file_path, user_id)
     VALUES (
@@ -85,5 +90,6 @@ module.exports = {
   findAllBeasiswaByTahun,
   createBeasiswa,
   updateBeasiswaById,
-  deleteBeasiswaById
+  deleteBeasiswaById,
+  findAllBeasiswaSearch
 }

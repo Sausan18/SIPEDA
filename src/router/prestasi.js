@@ -3,13 +3,13 @@ const getUser = require("../utils/getUser");
 const upload = multer({ dest: "public/files/" });
 const fs = require("fs");
 const excelJs = require("exceljs");
-const { createPrestasi, findAllPrestasiByTahun, findAllPrestasi, updatePrestasiById, deletePrestasiById } = require("../database/queries/prestasi");
+const { createPrestasi, findAllPrestasiByTahun, findAllPrestasi, updatePrestasiById, deletePrestasiById, findAllPrestasiSearch } = require("../database/queries/prestasi");
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
   const user = await getUser(req, res);
   if (!user) return res.redirect("/login");
-  const { tahun } = req.query;
+  const { tahun, search } = req.query;
 
   let tahunOption = [];
   let prestasi = await findAllPrestasi();
@@ -18,6 +18,10 @@ router.get("/", async (req, res) => {
 
   if (tahun) {
     prestasi = await findAllPrestasiByTahun(tahun);
+  }
+
+  if (search) {
+    prestasi = await findAllPrestasiSearch(search);
   }
 
   const error = req.flash('error');
