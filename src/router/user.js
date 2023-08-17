@@ -1,4 +1,4 @@
-const { createUser, findOneByUsername, findAllUserByRole, updateUserById } = require("../database/queries/user");
+const { createUser, findOneByUsername, findAllUserByRole, updateUserById, deleteUserById } = require("../database/queries/user");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const getUser = require("../utils/getUser");
@@ -111,6 +111,18 @@ router.post("/", upload.array('files'), async (req, res) => {
     req.flash('success', updateUser.message);
     return res.redirect("pengguna");
   }
+})
+
+router.get("/delete", async (req, res) => {
+  const deleteRes = await deleteUserById(req.query.id);
+
+  if (deleteRes.error) {
+    req.flash("error", deleteRes.message);
+    return res.redirect("/pengguna");
+  }
+
+  req.flash("success", deleteRes.message);
+  return res.redirect("/pengguna");
 })
 
 module.exports = router;

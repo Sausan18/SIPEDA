@@ -64,10 +64,29 @@ async function updateUserById(id, data) {
   return response
 }
 
+async function deleteUserById(id) {
+  const result = await query(`DELETE FROM users WHERE id = ${id}`);
+
+  let response = {
+    error: true,
+    message: "Gagal menghapus pengguna",
+  };
+
+  if (result.affectedRows) {
+    response = {
+      error: false,
+      message: "Pengguna berhasil dihapus",
+    };
+  }
+
+  return response;
+}
+
 module.exports = {
   findOneByUsername,
   findAllUserByRole,
   createUser,
   findAllUser,
-  updateUserById
+  updateUserById,
+  deleteUserById
 }
