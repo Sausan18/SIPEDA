@@ -249,7 +249,10 @@ router.get("/lpj", async (req, res) => {
 
   let tahunOption = [];
   let surat = await findAllLpj();
-  surat.forEach((surat) => tahunOption.push(new Date(surat.tanggal_pelaksana).getFullYear()));
+  surat.forEach((surat) => {
+    tahunOption.push(new Date(surat.tanggal_pelaksana).getFullYear())
+    surat.deskripsi = surat.deskripsi.split("\r\n").join("")
+  });
   tahunOption = [...new Set(tahunOption)]
 
   if (tahun) {
